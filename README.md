@@ -21,3 +21,14 @@ Three layers, each handling one problem.
 - **Intent layer** -- Agents broadcast end-to-end encrypted swap intents over a peer-to-peer mesh. No central coordinator, no public visibility.
 - **Matching layer** -- Any peer can act as a matcher. Compatible intents (e.g. opposite direction on the same pair) are batched together off-chain.
 - **Execution layer** -- Matched batches settle through a private execution service with retry logic, gas optimization, and full audit trails.
+
+## Stack
+
+- **Gensyn AXL** -- P2P encrypted mesh transport with built-in MCP/A2A support
+- **KeeperHub** -- execution and reliability layer (private routing, retry, audit)
+- **TypeScript / Node.js** -- coordinator and agent SDK
+- **Base Sepolia** -- testnet for end-to-end demo
+
+## Status
+
+🚧 In active development.
