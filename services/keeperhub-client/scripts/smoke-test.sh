@@ -31,7 +31,7 @@ echo
 
 # --- Fire the transfer ---
 RESPONSE=$(curl -sS -X POST "$KEEPERHUB_API_BASE/api/execute/transfer" \
-  -H "X-API-Key: $KEEPERHUB_API_KEY" \
+  -H "Authorization: Bearer $KEEPERHUB_API_KEY" \
   -H "Content-Type: application/json" \
   -d @- <<JSON
 {
