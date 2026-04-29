@@ -1,6 +1,7 @@
 import { AxlClient } from "./axl-client.js";
 import { IntentStore } from "./intent-store.js";
-import { Intent, ReceivedMessage } from "./types.js";
+import { Intent, Match, ReceivedMessage } from "./types.js";
+import * as crypto from "node:crypto";
 
 const AXL_URL = process.env.AXL_URL ?? "http://127.0.0.1:9002";
 
@@ -59,10 +60,40 @@ function handleMessage(msg: ReceivedMessage, store: IntentStore): void {
   }
 
   console.log(
-    `[coordinator] intent ${parsed.intentId} from ${msg.fromPeerId.slice(0, 12)}...: ` +
+    `[coordinator] intent ${parsed.intentId.slice(0, 8)} from ${msg.fromPeerId.slice(0, 12)}...: ` +
     `${parsed.side} ${parsed.amount} ${parsed.network} → ${parsed.recipientHint.slice(0, 12)}...`
   );
   console.log(`[coordinator] intent count: ${store.size()}`);
+
+  // Attempt match
+  const counterparty = store.findMatch(parsed);
+  if (counterparty) {
+    const match = createMatch(parsed, counterparty);
+    store.remove(parsed.intentId);
+    store.remove(counterparty.intentId);
+    onMatch(match);
+  }
+}
+
+function createMatch(a: Intent, b: Intent): Match {
+  const send = a.side === "send" ? a : b;
+  const receive = a.side === "receive" ? a : b;
+  return {
+    matchId: crypto.randomUUID(),
+    send,
+    receive,
+    matchedAt: new Date(),
+  };
+}
+
+/**
+ * What happens when a match is found.
+ */
+function onMatch(match: Match): void {
+  console.log(`[coordinator] MATCHED ${match.matchId.slice(0, 8)}`);
+  console.log(`            send:    ${match.send.intentId.slice(0, 8)} from ${match.send.agentId.slice(0, 12)}...`);
+  console.log(`            receive: ${match.receive.intentId.slice(0, 8)} from ${match.receive.agentId.slice(0, 12)}...`);
+  console.log(`            amount:  ${match.send.amount} ${match.send.network}`);
 }
 
 /**

@@ -22,3 +22,13 @@ export interface ReceivedMessage {
   body: Buffer;
   receivedAt: Date;
 }
+
+/**
+ * A pair of compatible intents that can settle together.
+ */
+export interface Match {
+  matchId: string;       // uuid for the match itself
+  send: Intent;          // the send-side intent
+  receive: Intent;       // the receive-side intent
+  matchedAt: Date;
+}

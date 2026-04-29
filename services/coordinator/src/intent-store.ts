@@ -50,4 +50,39 @@ export class IntentStore {
   size(): number {
     return this.intents.size;
   }
+
+  /**
+   * Find a compatible counterparty intent for the given one.
+   * Returns null if no match exists.
+   *
+   * Compatibility rules:
+   * - Opposite sides (send vs receive)
+   * - Same network and amount
+   * - They name each other via agentId / recipientHint
+   * - Both unexpired
+   */
+  findMatch(intent: Intent): Intent | null {
+    const oppositeSide = intent.side === "send" ? "receive" : "send";
+    const now = new Date();
+
+    for (const candidate of this.intents.values()) {
+      if (candidate.intentId === intent.intentId) continue;
+      if (candidate.side !== oppositeSide) continue;
+      if (candidate.network !== intent.network) continue;
+      if (candidate.amount !== intent.amount) continue;
+      if (candidate.agentId !== intent.recipientHint) continue;
+      if (candidate.recipientHint !== intent.agentId) continue;
+      if (new Date(candidate.expiresAt) <= now) continue;
+      return candidate;
+    }
+
+    return null;
+  }
+
+  /**
+   * Remove an intent by id. Returns true if it existed.
+   */
+  remove(intentId: string): boolean {
+    return this.intents.delete(intentId);
+  }
 }
