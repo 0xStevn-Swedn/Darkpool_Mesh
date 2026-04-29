@@ -14,7 +14,7 @@ This document lists the exact steps to run Darkpool Mesh locally. Updated as com
 
 - [x] AXL nodes (P2P mesh) -- see [infra/axl/README.md](../infra/axl/README.md)
 - [x] KeeperHub MCP server (execution layer)
-- [ ] Coordinator service (matching layer)
+- [X] Coordinator service (matching layer)
 - [ ] Agent SDK (intent broadcast)
 - [ ] Demo dashboard
 
