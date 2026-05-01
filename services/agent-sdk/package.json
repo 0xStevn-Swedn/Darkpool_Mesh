@@ -1,0 +1,16 @@
+{
+  "name": "agent-sdk",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "publish:send": "tsx scripts/publish-send.ts",
+    "publish:receive": "tsx scripts/publish-receive.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}

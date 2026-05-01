@@ -61,7 +61,7 @@ echo
 # --- One status call (sync execution; no need to loop hard) ---
 sleep 2
 STATUS_RESPONSE=$(curl -sS "$KEEPERHUB_API_BASE/api/execute/$EXEC_ID/status" \
-  -H "X-API-Key: $KEEPERHUB_API_KEY")
+  -H "Authorization: Bearer $KEEPERHUB_API_KEY")
 
 echo "Status response:"
 echo "$STATUS_RESPONSE" | python3 -m json.tool
