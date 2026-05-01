@@ -15,3 +15,5 @@ build/
 private.pem
 axl-data/
 .keeperhub/
+
+.demo-logs/

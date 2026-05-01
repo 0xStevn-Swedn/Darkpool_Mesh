@@ -1,0 +1,11 @@
+{
+  "name": "darkpool-mesh",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Private settlement layer for AI agents",
+  "scripts": {
+    "demo": "./scripts/demo.sh",
+    "demo:tmux": "./scripts/demo-tmux.sh"
+  },
+  "license": "MIT"
+}
