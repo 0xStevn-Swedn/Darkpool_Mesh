@@ -9,6 +9,7 @@ export interface Intent {
   side: "send" | "receive";
   amount: string;          // human-readable (e.g. "0.001")
   recipientHint: string;   // AXL pubkey of intended counterparty (64 hex chars)
+  settlementAddress: string;  // EVM address where settlement should land (0x...)
   expiresAt: string;       // ISO8601
   signature?: string;      // optional, v2 — intent provenance
 }
